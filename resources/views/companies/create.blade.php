@@ -13,7 +13,7 @@
         </div>
     @endif
     <div class="row">
-        <form method="post" action="{{ route('companies.store') }}">
+        <form method="post" action="{{ route('companies.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <input type="text" class="form-control" name="name" placeholder="Company Name"/>

@@ -13,12 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('lang/{lang}', 'LanguageController@setLang');
+Route::get('getLangs', 'LanguageController@getLangs');
+
+Route::group(['middleware' => 'lang'], function() {
+    Route::get('/', function () {
+        return view('welcome');
+    });
+    
+    Auth::routes();
+    
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::resource('companies', 'CompanyController');
+    Route::resource('employees', 'EmployeeController');
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('companies', 'CompanyController');
-Route::resource('employees', 'EmployeeController');

@@ -13,7 +13,7 @@
         </div><br />
     @endif
     <div class="row">
-        <form method="post" action="{{ route('companies.store') }}">
+        <form method="post" action="{{ route('employees.store') }}">
             @csrf
             <div class="form-group">
                 <label for="first_name">First Name:</label>
@@ -28,7 +28,7 @@
                 <select class="form-control" name="company_id">
                     <option >select company</option>
                     @foreach($companies as $company)
-                        <option value="{{ $commpany->id }}">{{ $company->name }}</option>
+                        <option value="{{ $company->id }}">{{ $company->name }}</option>
                     @endForeach
                 </select>
             </div>

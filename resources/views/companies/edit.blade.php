@@ -13,7 +13,7 @@
         </div><br />
     @endif
     <div class="row">
-    <form method="post" action="{{ action('CompanyController@update', $id) }}" >
+    <form method="post" action="{{ action('CompanyController@update', $company->id) }}" >
         @csrf
         <input name="_method" type="hidden" value="PATCH">
         <div class="form-group">

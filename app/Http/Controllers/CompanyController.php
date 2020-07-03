@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Company;
 use Illuminate\Http\Request;
+use App\Notifications\CompanyAdded;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
@@ -43,28 +47,20 @@ class CompanyController extends Controller
             'name'  => 'required',
             'email' => 'email',
             'website_url' => 'url',
-            'logo'  => 'dimensions:min_width=100,min_height=100'
+            'logo'  => 'mimes:jpeg,png,jpg,gif,svg|image|dimensions:min_width=100,min_height=100'
         ]);
-        dd($request->file('logo'));
         //Not recomended 
         $image = $request->file('logo');
-        $fileName   = time() . '.' . $image->getClientOriginalExtension();
-        $img = Image::make($image->getRealPath());
-        $img->resize(100, 100, function ($constraint) {
-            $constraint->aspectRatio();                 
-        });
-        $img->stream();
-        Storage::disk('local')->put('images/1/smalls'.'/'.$fileName, $img, 'public');
+        $filename = $this->saveLogo($image);
 
         $company = new Company([
-            'first_name' => $request->get('first_name'),
-            'last_name' => $request->get('last_name'),
+            'name' => $request->get('name'),
             'email' => $request->get('email'),
-            'job_title' => $request->get('job_title'),
-            'city' => $request->get('city'),
-            'country' => $request->get('country')
+            'website_url' => $request->get('website_url'),
+            'logo' => $fileName,
         ]);
         $company->save();
+        User::find(1)->notify(new CompanyAdded($company));
         return redirect('/companies')->with('success', 'Company saved!');
     }
 
@@ -105,18 +101,20 @@ class CompanyController extends Controller
     {
         //
         $request->validate([
-            'first_name'=>'required',
-            'last_name'=>'required',
-            'email'=>'required'
+            'name'  => 'required',
+            'email' => 'email',
+            'website_url' => 'url',
+            'logo'  => 'mimes:jpeg,png,jpg,gif,svg|image|dimensions:min_width=100,min_height=100'
         ]);
 
+        $image = $request->file('logo');
+        $fileName = $this->saveLogo($image);
+    
         $company = Company::find($id);
-        $company->first_name =  $request->get('first_name');
-        $company->last_name = $request->get('last_name');
+        $company->name =  $request->get('name');
         $company->email = $request->get('email');
-        $company->job_title = $request->get('job_title');
-        $company->city = $request->get('city');
-        $company->country = $request->get('country');
+        $company->website_url = $request->get('website_url');
+        $company->logo = $fileName;
         $company->save();
         return redirect('/companies')->with('success', 'Company updated!');
     }
@@ -133,5 +131,16 @@ class CompanyController extends Controller
         $company = Company::find($id);
         $company->delete();
         return redirect('/companies')->with('success', 'Company deleted!');
+    }
+
+    public function saveLogo($image){
+        $fileName   = time() . '.' . $image->getClientOriginalExtension();
+        $img = Image::make($image->getRealPath());
+        $img->resize(100, 100, function ($constraint) {
+            $constraint->aspectRatio();                 
+        });
+        $img->stream();
+        Storage::disk('local')->put('/logos/'.$fileName, $img, 'public');
+        return $fileName;
     }
 }

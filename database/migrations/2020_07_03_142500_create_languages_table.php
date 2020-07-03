@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEmployeesTable extends Migration
+class CreateLanguagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateEmployeesTable extends Migration
      */
     public function up()
     {
-        Schema::create('employees', function (Blueprint $table) {
+        Schema::create('languages', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->foreignId('company_id')->constrained()->onDelete('cascade');
-            $table->string('email');
-            $table->string('phone');
+            $table->string('symbol')->unique();;
+            $table->string('name');
+            $table->string('flag');
+            $table->enum('direction', ['rtl', 'ltr'])->default('ltr');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateEmployeesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employees');
+        Schema::dropIfExists('languages');
     }
 }

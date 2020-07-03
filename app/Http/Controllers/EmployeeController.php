@@ -51,9 +51,8 @@ class EmployeeController extends Controller
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
             'email' => $request->get('email'),
-            'job_title' => $request->get('job_title'),
-            'city' => $request->get('city'),
-            'country' => $request->get('country')
+            'company_id' => $request->get('company_id'),
+            'phone' => $request->get('phone'),
         ]);
         $employee->save();
         return redirect('/employees')->with('success', 'Employee saved!');
