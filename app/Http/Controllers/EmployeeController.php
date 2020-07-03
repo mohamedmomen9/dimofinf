@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
+use App\Employee;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -14,6 +16,8 @@ class EmployeeController extends Controller
     public function index()
     {
         //
+        $employees = Employee::paginate(10);
+        return view('employees.index', compact('employees'));
     }
 
     /**
@@ -24,6 +28,8 @@ class EmployeeController extends Controller
     public function create()
     {
         //
+        $companies = Company::all();
+        return view('employees.create', compact('companies'));
     }
 
     /**
@@ -35,6 +41,22 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'first_name'=>'required',
+            'last_name'=>'required',
+            'email'=>'required'
+        ]);
+
+        $employee = new Employee([
+            'first_name' => $request->get('first_name'),
+            'last_name' => $request->get('last_name'),
+            'email' => $request->get('email'),
+            'job_title' => $request->get('job_title'),
+            'city' => $request->get('city'),
+            'country' => $request->get('country')
+        ]);
+        $employee->save();
+        return redirect('/employees')->with('success', 'Employee saved!');
     }
 
     /**
@@ -46,6 +68,8 @@ class EmployeeController extends Controller
     public function show($id)
     {
         //
+        $employee = Employee::find($id);
+        return view('employees.show',compact('employee'));
     }
 
     /**
@@ -57,6 +81,8 @@ class EmployeeController extends Controller
     public function edit($id)
     {
         //
+        $employee = Employee::find($id);
+        return view('employees.edit', compact('employee'));
     }
 
     /**
@@ -69,6 +95,21 @@ class EmployeeController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'first_name'=>'required',
+            'last_name'=>'required',
+            'email'=>'required'
+        ]);
+
+        $employee = Employee::find($id);
+        $employee->first_name =  $request->get('first_name');
+        $employee->last_name = $request->get('last_name');
+        $employee->email = $request->get('email');
+        $employee->job_title = $request->get('job_title');
+        $employee->city = $request->get('city');
+        $employee->country = $request->get('country');
+        $employee->save();
+        return redirect('/employees')->with('success', 'Employee updated!');
     }
 
     /**
@@ -80,5 +121,8 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         //
+        $employee = Employee::find($id);
+        $employee->delete();
+        return redirect('/employees')->with('success', 'Employee deleted!');
     }
 }
