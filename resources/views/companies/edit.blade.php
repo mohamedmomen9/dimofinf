@@ -13,7 +13,7 @@
         </div><br />
     @endif
     <div class="row">
-    <form method="post" action="{{ action('CompanyController@update', $company->id) }}" >
+    <form method="post" action="{{ action('CompanyController@update', $company->id) }}" enctype="multipart/form-data">
         @csrf
         <input name="_method" type="hidden" value="PATCH">
         <div class="form-group">
@@ -33,7 +33,7 @@
                 <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
             </div>
             <div class="form-group custom-file">
-                <input type="file" class="custom-file-input  form-control" name="logo" placeholder="Upload logo file">
+                <input type="file" class="custom-file-input  form-control" value={{ $company->website_url }} name="logo" placeholder="Upload logo file">
                 <label class="custom-file-label" for="logo">Compnay Logo</label>
             </div>
         </div>

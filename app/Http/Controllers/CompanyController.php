@@ -111,15 +111,16 @@ class CompanyController extends Controller
             'website_url' => 'url',
             'logo'  => 'mimes:jpeg,png,jpg,gif,svg|image|dimensions:min_width=100,min_height=100'
         ]);
-
-        $image = $request->file('logo');
-        $fileName = $this->saveLogo($image);
-    
+        
         $company = Company::find($id);
         $company->name =  $request->get('name');
         $company->email = $request->get('email');
         $company->website_url = $request->get('website_url');
-        $company->logo = $fileName;
+        if($request->hasFile('image')) {
+            $image = $request->file('logo');
+            $fileName = $this->saveLogo($image);
+            $company->logo = $fileName;
+        }
         $company->save();
         return redirect('/companies')->with('success', 'Company updated!');
     }

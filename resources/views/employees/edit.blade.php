@@ -27,7 +27,6 @@
         <div class="form-group">
             <label for="company_id">Company:</label>
             <select class="form-control" name="company_id">
-                <option >select company</option>
                 @foreach($companies as $company)
                     <option value="{{ $company->id }}" @if($company->id == $employee->company_id) selected @endif >{{ $company->name }}</option>
                 @endForeach

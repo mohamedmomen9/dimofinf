@@ -105,9 +105,8 @@ class EmployeeController extends Controller
         $employee->first_name =  $request->get('first_name');
         $employee->last_name = $request->get('last_name');
         $employee->email = $request->get('email');
-        $employee->job_title = $request->get('job_title');
-        $employee->city = $request->get('city');
-        $employee->country = $request->get('country');
+        $employee->company_id = (int)$request->company_id;
+        $employee->phone = $request->has('phone')?$request->get('phone'):'';
         $employee->save();
         return redirect('/employees')->with('success', 'Employee updated!');
     }
