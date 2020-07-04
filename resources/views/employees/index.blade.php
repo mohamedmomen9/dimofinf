@@ -2,12 +2,14 @@
 
 @section('content')
 <div class="container">
-    <h1>Employees</h1>
+<div class="card col-md-9">
+    <div classs="card-header">
+    <h2>{{ trans('home.employees') }}</h2>
     @auth
-    <div>
-        <a style="margin: 19px;" href="{{ route('employees.create') }}" class="btn btn-primary">New Employee</a>
-    </div>
+    <a style="margin: 19px;" href="{{ route('employees.create') }}" class="btn btn-primary float-right">New Employee</a>
     @endauth
+    </div>
+    <div class="card-body">
     <div class="col-sm-12">
         @if(session()->get('success'))
             <div class="alert alert-success">
@@ -53,5 +55,7 @@
         </tbody>
     </table>
     {{ $employees->links() }}
-<div>
+    </div>
+</div>
+</div>
 @endsection

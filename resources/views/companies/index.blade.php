@@ -1,13 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1>Companies</h1>
-    @auth
-    <div>
-        <a style="margin: 19px;" href="{{ route('companies.create') }}" class="btn btn-primary">New Company</a>
+<div class="container row justify-content-center">
+<div class="card col-md-9">
+    <div classs="card-header">
+        <h2>{{ trans('home.companies') }}</h2>
+        @auth
+            <a style="margin: 19px;" href="{{ route('companies.create') }}" class="btn btn-primary float-right" >New Company</a>
+        @endauth
     </div>
-    @endauth
+    <div classs="card-body">
     <div class="col-sm-12">
         @if(session()->get('success'))
             <div class="alert alert-success">
@@ -34,7 +36,7 @@
                 <td>{{ $company->id }}</td>
                 <td>{{ $company->name }}</td>
                 <td>{{ $company->email }}</td>
-                <td>{{ $company->logo }}</td>
+                <td><img src="storage/{{ $company->logo }}"></td>
                 <td>{{ $company->website_url }}</td>
                 @auth
                 <td><a href="{{action('CompanyController@edit',$company->id)}}" class="btn btn-primary">Edit</a></td>
@@ -51,5 +53,7 @@
         </tbody>
     </table>
     {{ $companies->links() }}
-<div>
+    </div>
+</div>
+</div>
 @endsection

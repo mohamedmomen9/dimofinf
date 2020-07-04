@@ -22,7 +22,7 @@ class CompanyAdded extends Notification
     public function __construct(Company $company)
     {
         //
-        $this->comany = $company;
+        $this->company = $company;
     }
 
     /**
@@ -46,9 +46,9 @@ class CompanyAdded extends Notification
     {
         return (new MailMessage)
                     ->subject('Company Added')
-                    ->line('A new company has been added.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line('A new company has been added, its name is  '.$this->company->name)
+                    ->action('Notification Action', url('/companies'))
+                    ->line('Check this for more details!');
     }
 
     /**

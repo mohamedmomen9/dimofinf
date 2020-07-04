@@ -6,6 +6,7 @@ use App\User;
 use App\Company;
 use Illuminate\Http\Request;
 use App\Notifications\CompanyAdded;
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
@@ -43,6 +44,10 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         //
+        if(Auth::guest())
+        {
+            return redirect('/login')->with('message', 'Please Login first!');;
+        }
         $request->validate([
             'name'  => 'required',
             'email' => 'email',
@@ -51,7 +56,7 @@ class CompanyController extends Controller
         ]);
         //Not recomended 
         $image = $request->file('logo');
-        $filename = $this->saveLogo($image);
+        $fileName = $this->saveLogo($image);
 
         $company = new Company([
             'name' => $request->get('name'),
@@ -140,7 +145,7 @@ class CompanyController extends Controller
             $constraint->aspectRatio();                 
         });
         $img->stream();
-        Storage::disk('local')->put('/logos/'.$fileName, $img, 'public');
+        Storage::disk('local')->put('/public/'.$fileName, $img, 'public');
         return $fileName;
     }
 }

@@ -34,10 +34,10 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/companies') }}">Companies</a>
+                            <a class="nav-link" href="{{ url('/companies') }}">{{ trans('home.companies') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/employees') }}">Employees</a>
+                            <a class="nav-link" href="{{ url('/employees') }}">{{ trans('home.employees') }}</a>
                         </li>
                     </ul>
 
@@ -48,7 +48,7 @@
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ app()->getLocale() }} <span class="caret"></span>
                             </a>
-                            <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu" style="left: auto;" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ url('lang/ar') }}">عربى</a>
                                 <a class="dropdown-item" href="{{ url('lang/en') }}">English</a>
                             </div>
