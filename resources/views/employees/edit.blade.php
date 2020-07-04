@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Edit Employee</h1>
+    <h2>Edit Employee</h2>
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -13,7 +13,7 @@
         </div>
     @endif
     <div class="row">
-    <form method="post" action="{{ action('EmployeeController@update', $id) }}" >
+    <form method="post" action="{{ action('EmployeeController@update', $employee->id) }}" >
         @csrf
         <input name="_method" type="hidden" value="PATCH">
         <div class="form-group">
@@ -29,7 +29,7 @@
             <select class="form-control" name="company_id">
                 <option >select company</option>
                 @foreach($companies as $company)
-                    <option value="{{ $commpany->id }}" @if($commpany->id == $employee->company_id) selected @endif >{{ $company->name }}</option>
+                    <option value="{{ $company->id }}" @if($company->id == $employee->company_id) selected @endif >{{ $company->name }}</option>
                 @endForeach
             </select>
         </div>

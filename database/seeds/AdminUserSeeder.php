@@ -12,10 +12,14 @@ class AdminUserSeeder extends Seeder
     public function run()
     {
         //add admin user
-        DB::table('users')->insert([
+        $user = User::create([
             'name' => 'admin',
             'email' => 'admin@admin.com',
             'password' => Hash::make('password'),
         ]);
+        $role = Role::create(['name' => 'Admin']);
+        $permissions = Permission::pluck('id','id')->all();
+        $role->syncPermissions($permissions);
+        $user->assignRole([$role->id]);
     }
 }

@@ -39,6 +39,12 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/employees') }}">{{ trans('home.employees') }}</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/users') }}">{{ trans('home.users') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/roles') }}">{{ trans('home.roles') }}</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

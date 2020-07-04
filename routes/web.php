@@ -41,5 +41,7 @@ Route::group(['middleware' => 'lang'], function() {
     Route::group(['middleware' => 'auth'], function() {
         Route::resource('companies', 'CompanyController', ['except' => ['index']]);
         Route::resource('employees', 'EmployeeController', ['except' => ['index']]);
+        Route::resource('roles','RoleController');
+        Route::resource('users','UserController');
     });
 });
