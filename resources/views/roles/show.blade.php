@@ -25,8 +25,8 @@
         <div class="form-group">
             <strong>Permissions:</strong>
             @if(!empty($rolePermissions))
-                @foreach($rolePermissions as $v)
-                    <label class="label label-success">{{ $v->name }},</label>
+                @foreach($rolePermissions as $rolePermission)
+                    <label class="label label-success">{{ $rolePermission->name }},</label>
                 @endforeach
             @endif
         </div>

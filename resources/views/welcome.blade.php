@@ -67,10 +67,8 @@
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ url('lang/ar') }}">عربى</a>
-                        <a class="dropdown-item" href="{{ url('lang/en') }}">English</a>
-                    </div>
+                        <a href="{{ url('lang/ar') }}">عربى</a>
+                        <a href="{{ url('lang/en') }}">English</a>
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
                     @else
@@ -91,6 +89,10 @@
                 <div class="links">
                     <a href="{{ url('/companies') }}">{{ trans('home.companies') }}</a>
                     <a href="{{ url('/employees') }}">{{ trans('home.employees') }}</a>
+                    @auth
+                    <a href="{{ url('/users') }}">{{ trans('home.users') }}</a>
+                    <a href="{{ url('/roles') }}">{{ trans('home.roles') }}</a>
+                    @endauth
                 </div>
             </div>
         </div>
